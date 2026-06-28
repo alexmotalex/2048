@@ -24,18 +24,6 @@
   }
 }
 
-.field-cell {
-  vertical-align: middle;
-
-  &--new {
-    animation: pop 0.15s ease-out;
-  }
-
-  &--merged {
-    animation: merge 0.15s ease-out;
-  }
-}
-
 body {
   margin: 0;
   display: flex;
@@ -56,8 +44,16 @@ body {
   color: #776e65;
   box-sizing: border-box;
   text-align: center;
-  vertical-align: center;
+  vertical-align: middle;
   user-select: none;
+
+  &--new {
+    animation: pop 0.15s ease-out;
+  }
+
+  &--merged {
+    animation: merge 0.15s ease-out;
+  }
 
   &--2 {
     background: #eee4da;
