@@ -1,3 +1,41 @@
+@keyframes pop {
+  0% {
+    transform: scale(0.8);
+    opacity: 0.5;
+  }
+  60% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes merge {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.15);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.field-cell {
+  vertical-align: middle;
+
+  &--new {
+    animation: pop 0.15s ease-out;
+  }
+
+  &--merged {
+    animation: merge 0.15s ease-out;
+  }
+}
+
 body {
   margin: 0;
   display: flex;

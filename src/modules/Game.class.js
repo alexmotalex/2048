@@ -188,8 +188,8 @@ class Game {
 
         // Check down neighbor
         if (
-          rowIndex < BOARD_SIZE - 1 &&
-          value === this.state[rowIndex + 1][colIndex]
+          rowIndex < BOARD_SIZE - 1
+          && value === this.state[rowIndex + 1][colIndex]
         ) {
           return true;
         }
@@ -207,10 +207,10 @@ class Game {
       return false;
     }
 
-    const rightNeighbor =
-      col < BOARD_SIZE - 1 && tile === this.state[row][col + 1];
-    const downNeighbor =
-      row < BOARD_SIZE - 1 && tile === this.state[row + 1][col];
+    const rightNeighbor
+      = col < BOARD_SIZE - 1 && tile === this.state[row][col + 1];
+    const downNeighbor
+      = row < BOARD_SIZE - 1 && tile === this.state[row + 1][col];
 
     return rightNeighbor || downNeighbor;
   }

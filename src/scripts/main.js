@@ -1,6 +1,5 @@
 'use strict';
 
-// Uncomment the next lines to use your game instance in the browser
 const Game = require('../modules/Game.class');
 const game = new Game();
 const startMessage = document.querySelector('.message-start');
@@ -56,12 +55,22 @@ function updateUi() {
 
     rowCells.forEach((cell, colIndex) => {
       const cellValue = currentState[rowIndex][colIndex];
+      const prevValue = parseInt(cell.dataset.value || '0');
 
-      cell.innerHTML = cellValue || '';
       cell.className = 'field-cell';
+      cell.innerHTML = cellValue || '';
+      cell.dataset.value = cellValue || '0';
 
       if (cellValue > 0) {
         cell.classList.add(`field-cell--${cellValue}`);
+
+        if (!prevValue && cellValue) {
+          // new tile appeared
+          cell.classList.add('field-cell--new');
+        } else if (prevValue && cellValue === prevValue * 2) {
+          // tile merged (doubled in value)
+          cell.classList.add('field-cell--merged');
+        }
       }
     });
   });
