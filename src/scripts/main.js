@@ -1,5 +1,7 @@
 'use strict';
 
+const SWIPE_THRESHOLD = 30;
+
 const Game = require('../modules/Game.class');
 const game = new Game();
 const startMessage = document.querySelector('.message-start');
@@ -8,6 +10,60 @@ const gameField = document.querySelector('.game-field');
 const gameScore = document.querySelector('.game-score');
 const winMessage = document.querySelector('.message-win');
 const loseMessage = document.querySelector('.message-lose');
+
+let touchStartX = 0;
+let touchStartY = 0;
+
+document.addEventListener(
+  'touchstart',
+  (e) => {
+    touchStartX = e.touches[0].clientX;
+    touchStartY = e.touches[0].clientY;
+  },
+  { passive: true },
+);
+
+document.addEventListener(
+  'touchend',
+  (e) => {
+    if (game.getStatus() !== 'playing') {
+      return;
+    }
+
+    const touchEndX = e.changedTouches[0].clientX;
+    const touchEndY = e.changedTouches[0].clientY;
+
+    const diffX = touchEndX - touchStartX;
+    const diffY = touchEndY - touchStartY;
+
+    const absX = Math.abs(diffX);
+    const absY = Math.abs(diffY);
+
+    // ignore taps (too small movement)
+    if (absX < SWIPE_THRESHOLD && absY < SWIPE_THRESHOLD) {
+      return;
+    }
+
+    // horizontal swipe is dominant
+    if (absX > absY) {
+      if (diffX > 0) {
+        game.moveRight();
+      } else {
+        game.moveLeft();
+      }
+    } else {
+      // vertical swipe is dominant
+      if (diffY > 0) {
+        game.moveDown();
+      } else {
+        game.moveUp();
+      }
+    }
+
+    updateUi();
+  },
+  { passive: true },
+);
 
 button.addEventListener('click', () => {
   if (button.className === 'button restart') {
